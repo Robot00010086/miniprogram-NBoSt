@@ -24,6 +24,8 @@
 
 # TDesign 零售行业模版示例小程序
 
+基于模板的开发(a new line)
+
 TDesign 零售模版示例小程序采用 [TDesign 企业级设计体系小程序解决方案](https://tdesign.tencent.com/miniprogram/overview) 进行搭建，依赖 [TDesign 微信小程序组件库](https://github.com/Tencent/tdesign-miniprogram)，涵盖完整的基本零售场景需求。
 
 ## :high_brightness: 预览
@@ -99,8 +101,9 @@ TDesign 零售模版示例小程序采用 [TDesign 企业级设计体系小程�
 ## :hammer: 构建运行
 
 1. `npm install`
-2. 小程序开发工具中引入工程
-3. 构建 npm
+2. （如果npm install 过慢）npm install -g cnpm --registry=https://registry.npm.taobao.org  && cnpm install
+3. 小程序开发工具中引入工程
+4. 构建 npm
 
 ## :art: 代码风格控制
 
