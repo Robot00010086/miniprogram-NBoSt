@@ -7,7 +7,7 @@
 	  value="{{keywords}}"
 	  leftIcon=""
 	  rightIcon=""
-	  placeholder="iPhone12pro"
+	  placeholder="输入书籍名称"
 	  bind:submit="handleSubmit"
 	>
 		<t-icon
@@ -25,6 +25,7 @@
 		  color="#bbb"
 		/>
 	</t-search>
+	<!--
 	<filter
 	  wr-class="filter-container"
 	  bind:change="handleFilterChange"
@@ -64,16 +65,46 @@
 			</view>
 		</filter-popup>
 	</filter>
-	<view class="empty-wrap" wx:if="{{goodsList.length === 0 && hasLoaded}}">
-		<t-empty t-class="empty-tips" size="240rpx" description="暂无相关商品" />
-	</view>
-	<view class="category-goods-list" wx:if="{{goodsList.length}}">
-		<goods-list
-		  wr-class="wr-goods-list"
-		  goodsList="{{goodsList}}"
-		  bind:click="gotoGoodsDetail"
-		  bind:addcart="handleAddCart"
-		/>
+	-->
+	<view class="goods-list-wrap wr-class" >
+		<block wx:for="{{goodsList}}" wx:for-item="item" wx:key="index" >
+	
+			<view class="goods-card">
+				<view class="goods-card__main">
+					<view class="goods-card__thumb" bindtap="gotoGoodsDetail" data-index="{{index}}">
+						<t-image
+			 				 t-class="goods-card__img"
+						  src="{{ item.image }}"
+						  mode="aspectFill"
+			 				 lazy-load
+						/>
+					</view>
+					<view class="goods-card__body" bindtap="gotoGoodsDetail" data-index="{{index}}">
+						<view class="goods-card__upper">
+							<view class="goods-card__title">
+								{{ item.name }}
+							</view>
+							<view class="goods-card__title">
+								{{ item.introduction }}
+							</view>
+						</view>
+					</view>
+					<view class="goods-card__down">
+			
+						<t-icon
+							class="goods-card__add-cart"
+							prefix="wr"
+							name="cartAdd"
+							id="{{independentID}}-cart"
+							data-id="{{independentID}}"
+							catchtap="addCartHandle"
+							size="48rpx"
+							color="#FA550F"
+						/>
+					</view>
+				</view>
+			</view>
+		</block>
 	</view>
 	<load-more wx:if="{{goodsList.length > 0}}" status="{{loadMoreStatus}}" no-more-text="没有更多了" />
 </view>

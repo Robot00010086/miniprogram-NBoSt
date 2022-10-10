@@ -9,10 +9,10 @@ function mockFetchHome() {
       swiper: genSwiperImageList(),
       tabList: [
         {
-          text: '精选推荐',
+          text: '推荐书籍',
           key: 0,
         },
-        {
+       /* {
           text: '夏日防晒',
           key: 1,
         },
@@ -36,6 +36,7 @@ function mockFetchHome() {
           text: '手机也疯狂',
           key: 6,
         },
+        */
       ],
       activityImg: `${cdnBase}/activity/banner.png`,
     };

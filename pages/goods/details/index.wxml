@@ -1,7 +1,6 @@
 <view class="goods-detail-page">
 	<view class="goods-head">
 		<t-swiper
-		  wx:if="{{details.images.length > 0}}"
 		  t-class="t-swiper"
 		  current="{{current}}"
 		  autoplay="{{autoplay}}"
@@ -10,7 +9,7 @@
 		  navigation="{{navigation}}"
 		>
 			<t-swiper-item
-			  wx:for="{{details.images}}"
+			  wx:for="{{images}}"
 			  wx:for-item="item"
 			  wx:for-index="index"
 			  wx:key="index"
@@ -18,6 +17,31 @@
 				<t-image src="{{item}}" t-class="swipe-img" />
 			</t-swiper-item>
 		</t-swiper>
+	</view>
+
+	<view class="goods-info">
+			<view class="goods-number">
+				<view class="goods-price">
+					<price
+					  wr-class="class-goods-price"
+					  symbol-class="class-goods-symbol"
+					  price="{{minSalePrice}}"
+					  type="lighter"
+					/>
+					<view class="goods-price-up">起</view>
+					<price wr-class="class-goods-del" price="{{maxLinePrice}}" type="delthrough" />
+				</view>
+				<view class="sold-num">已售{{soldNum}}</view>
+			</view>
+			<view class="goods-title">
+				<view class="goods-name">{{name}}</view>
+			</view>
+			<view class="goods-intro">{{introduction}}</view>
+			<view class="goods-title">
+				<view class="goods-name">{{seller}}</view>
+			</view>
+		</view>
+<!--
 		<view class="goods-info">
 			<view class="goods-number">
 				<view class="goods-price">
@@ -171,6 +195,8 @@
 	  show="{{isShowPromotionPop}}"
 	  bind:promotionChange="promotionChange"
 	/>
+	-->
 </view>
+
 <t-toast id="t-toast" />
 

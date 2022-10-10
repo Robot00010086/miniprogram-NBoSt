@@ -77,3 +77,18 @@
 .add-notes__confirm {
   color: #fa4126 !important;
 }
+.t-search {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.t-search__input-box {
+  flex: 1;
+  box-sizing: border-box;
+  display: flex;
+  height: 80rpx;
+  align-items: center;
+  border: 2rpx solid var(--td-search-border-color);
+  background: var(--td-search-bg-color);
+  padding: 16rpx 24rpx;
+}

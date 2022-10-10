@@ -25,7 +25,9 @@ Page({
   },
 
   async queryHistory() {
+    /*
     try {
+
       const data = await getSearchHistory();
       const code = 'Success';
       if (String(code).toUpperCase() === 'SUCCESS') {
@@ -37,9 +39,15 @@ Page({
     } catch (error) {
       console.error(error);
     }
+    */
+   //api get history
+   this.setData({
+     historyWords:["计算机网络","概率论与数理统计"]
+   })
   },
 
   async queryPopular() {
+    /*
     try {
       const data = await getSearchPopular();
       const code = 'Success';
@@ -52,6 +60,12 @@ Page({
     } catch (error) {
       console.error(error);
     }
+    */
+   //api get popular words
+   this.setData({
+      popularWords:["计算机体系结构","计算机图形学"]
+
+   })
   },
 
   confirm() {
@@ -73,6 +87,7 @@ Page({
   },
 
   handleClearHistory() {
+    /*
     const { dialog } = this.data;
     this.deleteType = 1;
     this.setData({
@@ -82,6 +97,12 @@ Page({
       },
       dialogShow: true,
     });
+    */
+   //api clear history
+   this.setData({
+     historyWords:[]
+   })
+
   },
 
   deleteCurr(e) {
@@ -108,12 +129,33 @@ Page({
       });
     }
   },
+  handlePopularTap(e) {
+    const { popularWords } = this.data;
+    const { dataset } = e.currentTarget;
+    const _searchValue = popularWords[dataset.index || 0] || '';
+    if (_searchValue) {
+      wx.navigateTo({
+        url: `/pages/goods/result/index?searchValue=${_searchValue}`,
+      });
+    }
+  },
 
   handleSubmit(e) {
-    const { value } = e.detail.value;
+    const  value  = e.detail.value;
+    //console.log(this.data.searchValue);
+    //console.log(e.detail)
     if (value.length === 0) return;
     wx.navigateTo({
       url: `/pages/goods/result/index?searchValue=${value}`,
+    });
+  },
+  goToSearchResult(e) {
+    console.log(this.data.searchValue);
+    if(!this.searchValue || this.data.searchValue.length==0){
+      return;
+    }
+    wx.navigateTo({
+      url: `/pages/goods/result/index?searchValue=${this.data.searchValue}`,
     });
   },
 });

@@ -71,61 +71,34 @@ Page({
   },
 
   async init(reset = true) {
-    const { loadMoreStatus, goodsList = [] } = this.data;
-    const params = this.generalQueryData(reset);
-    if (loadMoreStatus !== 0) return;
+    //api keywords search book id and info
+    //console.log(this.data.keywords);
     this.setData({
-      loadMoreStatus: 1,
-      loading: true,
-    });
-    try {
-      const result = await getSearchResult(params);
-      const code = 'Success';
-      const data = result;
-      if (code.toUpperCase() === 'SUCCESS') {
-        const { spuList, totalCount = 0 } = data;
-        if (totalCount === 0 && reset) {
-          this.total = totalCount;
-          this.setData({
-            emptyInfo: {
-              tip: '抱歉，未找到相关商品',
-            },
-            hasLoaded: true,
-            loadMoreStatus: 0,
-            loading: false,
-            goodsList: [],
-          });
-          return;
+      goodsList:[
+        {
+          id:1,
+          name:"hahah",
+          introduction:"info",
+          image:"https://cdn-we-retail.ym.tencent.com/tsr/goods/nz-09a.png",
+          seller:"seller"
+        },
+        {
+          id:2,
+          name:"hahah",
+          introduction:"info",
+          image:"https://cdn-we-retail.ym.tencent.com/tsr/goods/nz-09a.png",
+          seller:"seller"
+        },
+        {
+          id:3,
+          name:"hahah",
+          introduction:"info",
+          image:"https://cdn-we-retail.ym.tencent.com/tsr/goods/nz-09a.png",
+          seller:"seller"
         }
 
-        const _goodsList = reset ? spuList : goodsList.concat(spuList);
-        _goodsList.forEach((v) => {
-          v.tags = v.spuTagList.map((u) => u.title);
-          v.hideKey = { desc: true };
-        });
-        const _loadMoreStatus = _goodsList.length === totalCount ? 2 : 0;
-        this.pageNum = params.pageNum || 1;
-        this.total = totalCount;
-        this.setData({
-          goodsList: _goodsList,
-          loadMoreStatus: _loadMoreStatus,
-        });
-      } else {
-        this.setData({
-          loading: false,
-        });
-        wx.showToast({
-          title: '查询失败，请稍候重试',
-        });
-      }
-    } catch (error) {
-      this.setData({
-        loading: false,
-      });
-    }
-    this.setData({
-      hasLoaded: true,
-      loading: false,
+
+      ]
     });
   },
 
@@ -167,13 +140,15 @@ Page({
     });
   },
 
-  gotoGoodsDetail(e) {
-    const { index } = e.detail;
-    const { spuId } = this.data.goodsList[index];
-    wx.navigateTo({
-      url: `/pages/goods/details/index?spuId=${spuId}`,
-    });
-  },
+  gotoGoodsDetail(e){
+    // console.log(e);
+     const index=parseInt(e.currentTarget.dataset.index);
+     //console.log(index);
+     wx.navigateTo({
+       url: `/pages/goods/details/index?id=${this.data.goodsList[index].id}`,
+     });
+ 
+   },
 
   handleFilterChange(e) {
     const { overall, sorts } = e.detail;

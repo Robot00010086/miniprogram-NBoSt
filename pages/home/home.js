@@ -59,7 +59,35 @@ Page({
         imgSrcs: swiper,
         pageLoading: false,
       });
-      this.loadGoodsList(true);
+      this.setData({
+        goodsList:[
+          {
+            id:1,
+            name:"hahah",
+            introduction:"info",
+            image:"https://cdn-we-retail.ym.tencent.com/tsr/goods/nz-09a.png",
+            seller:"seller"
+          },
+          {
+            id:2,
+            name:"hahah",
+            introduction:"info",
+            image:"https://cdn-we-retail.ym.tencent.com/tsr/goods/nz-09a.png",
+            seller:"seller"
+          },
+          {
+            id:3,
+            name:"hahah",
+            introduction:"info",
+            image:"https://cdn-we-retail.ym.tencent.com/tsr/goods/nz-09a.png",
+            seller:"seller"
+          }
+
+
+        ]
+
+      });
+      //this.loadGoodsList(true);
     });
   },
 
@@ -102,14 +130,6 @@ Page({
     }
   },
 
-  goodListClickHandle(e) {
-    const { index } = e.detail;
-    const { spuId } = this.data.goodsList[index];
-    wx.navigateTo({
-      url: `/pages/goods/details/index?spuId=${spuId}`,
-    });
-  },
-
   goodListAddCartHandle() {
     Toast({
       context: this,
@@ -128,4 +148,14 @@ Page({
       url: `/pages/promotion-detail/index?promotion_id=${promotionID}`,
     });
   },
+
+  gotoGoodsDetail(e){
+   // console.log(e);
+    const index=parseInt(e.currentTarget.dataset.index);
+    //console.log(index);
+    wx.navigateTo({
+      url: `/pages/goods/details/index?id=${this.data.goodsList[index].id}`,
+    });
+
+  }
 });

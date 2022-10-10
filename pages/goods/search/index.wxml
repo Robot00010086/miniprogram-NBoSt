@@ -1,11 +1,12 @@
 <view class="search-page">
+	
 	<t-search
 	  t-class-input-container="t-class__input-container"
 	  t-class-input="t-search__input"
 	  value="{{searchValue}}"
 	  leftIcon=""
 	  rightIcon=""
-	  placeholder="iPhone12pro"
+	  placeholder="输入书籍名称进行查询"
 	  bind:submit="handleSubmit"
 		focus
 	>
@@ -24,6 +25,27 @@
 		  color="#bbb"
 		/>
 	</t-search>
+	
+	<!--
+	<view class="t-class__input-container t-search t-search__input-box">
+		<t-icon
+		  slot="left-icon"
+		  prefix="wr"
+		  name="search"
+		  size="40rpx"
+		  color="#bbb"
+			bindtap="goToSearchResult"
+		/>
+		<input class="t-search__input" value="{{searchValue}}" placeholder="book" type="text" bindinput="inputValue" auto-focus />
+		<t-icon
+		  slot="right-icon"
+		  prefix="wr"
+		  name="clear_filled"
+		  size="40rpx"
+		  color="#bbb"
+		/>
+	</view>
+	-->
 	<view class="search-wrap">
 		<view class="history-wrap">
 			<view class="search-header">
@@ -53,7 +75,7 @@
 				  class="search-item"
 				  hover-class="hover-history-item"
 				  wx:for="{{popularWords}}"
-				  bind:tap="handleHistoryTap"
+				  bind:tap="handlePopularTap"
 				  data-index="{{index}}"
 				  wx:key="*this"
 				>
@@ -62,14 +84,5 @@
 			</view>
 		</view>
 	</view>
-	<t-dialog
-	  visible="{{dialogShow}}"
-	  content="{{dialog.message}}"
-	  bindconfirm="confirm"
-	  bind:close="close"
-	  confirm-btn="确定"
-	  cancel-btn="{{dialog.showCancelButton ? '取消' : null}}"
-	  t-class-confirm="add-notes__confirm"
-	/>
 </view>
 

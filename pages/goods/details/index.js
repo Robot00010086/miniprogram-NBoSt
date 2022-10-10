@@ -23,7 +23,7 @@ const obj2Params = (obj = {}, encode = false) => {
 
 Page({
   data: {
-    commentsList: [],
+  /*  commentsList: [],
     commentsStatistics: {
       badCount: 0,
       commentCount: 0,
@@ -36,7 +36,6 @@ Page({
     activityList: [],
     recLeftImg,
     recRightImg,
-    details: {},
     goodsTabArray: [
       {
         name: '商品',
@@ -77,17 +76,22 @@ Page({
     outOperateStatus: false, // 是否外层加入购物车
     operateType: 0,
     selectSkuSellsPrice: 0,
-    maxLinePrice: 0,
-    minSalePrice: 0,
-    maxSalePrice: 0,
     list: [],
-    spuId: '',
-    navigation: { type: 'fraction' },
-    current: 0,
-    autoplay: true,
-    duration: 500,
-    interval: 5000,
-    soldNum: 0, // 已售数量
+    */
+   id: 0,
+   images:[],
+   name:"",
+   introduction:"",
+   seller:"",
+   current: 0,
+   autoplay: true,
+   duration: 500,
+   interval: 5000,
+   navigation: { type: 'fraction' },
+   maxLinePrice: 0,
+   minSalePrice: 0,
+   maxSalePrice: 0,
+   soldNum: 0
   },
 
   handlePopupHide() {
@@ -307,8 +311,8 @@ Page({
     });
   },
 
-  getDetail(spuId) {
-    Promise.all([fetchGood(spuId), fetchActivityList()]).then((res) => {
+  getDetail(id) {
+    /*Promise.all([fetchGood(spuId), fetchActivityList()]).then((res) => {
       const [details, activityList] = res;
       const skuArray = [];
       const {
@@ -347,7 +351,15 @@ Page({
         soldout: isPutOnSale === 0,
         soldNum,
       });
-    });
+    });*/
+    //api get goodinfo  id
+    this.setData({
+      name:"hahah",
+      introduction:"info",
+     images:["https://cdn-we-retail.ym.tencent.com/tsr/goods/nz-09a.png","https://cdn-we-retail.ym.tencent.com/tsr/goods/nz-09a.png"],
+      seller:"seller"
+
+    })
   },
 
   async getCommentsList() {
@@ -432,12 +444,13 @@ Page({
   },
 
   onLoad(query) {
-    const { spuId } = query;
+    const { id } = query;
     this.setData({
-      spuId: spuId,
+      id: id,
     });
-    this.getDetail(spuId);
-    this.getCommentsList(spuId);
-    this.getCommentsStatistics(spuId);
+    console.log(id);
+    this.getDetail(id);
+   // this.getCommentsList(spuId);
+   // this.getCommentsStatistics(spuId);
   },
 });

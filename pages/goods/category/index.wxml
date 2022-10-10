@@ -1,8 +1,57 @@
 <view class="wrap">
-  <goods-category
-    level="{{3}}"
-    custom-class="goods-category-class"
-    category="{{list}}"
-    bind:changeCategory="onChange"
-  />
+
+  <scroll-view class="c-sidebar custom-class" scroll-y>
+    <view class="c-sidebar-item-container">
+  <view
+    class="c-sidebar-item {{ index==activeKey ? 'active' : '' }} custom-class"
+    hover-class="c-sidebar-item--hover"
+    hover-stay-time="70"
+    bindtap="onClick"
+    data-index="{{index}}"
+    wx:for="{{list}}"
+    wx:key="index"
+  >
+    <view class="c-sidebar-item__text text-overflow"> {{ item.name }} </view>
+  </view>
+</view>
+</scroll-view>
+
+<scroll-view class="c-sidebar-sub custom-class" scroll-y>
+    <view class="c-sidebar-item-container">
+  <view
+    class="c-sidebar-item {{ index==subActiveKey ? 'active' : '' }} custom-class"
+    hover-class="c-sidebar-item--hover"
+    hover-stay-time="70"
+    bindtap="onClickSub"
+    data-index="{{index}}"
+    wx:for="{{list[activeKey].children}}"
+    wx:key="index"
+  >
+    <view class="c-sidebar-item__text text-overflow"> {{ item.name }} </view>
+  </view>
+</view>
+</scroll-view>
+
+<scroll-view class="c-sidebar-books  custom-class" scroll-y>
+    <view class="c-sidebar-item-container">
+    <view 
+    class="c-sidebar-item active custom-class"
+    bindtap="goToSearchLesson"
+    >
+    前往搜索此课程相关的书籍
+    </view>
+  <view
+    class="c-sidebar-item custom-class"
+    hover-class="c-sidebar-item--hover"
+    hover-stay-time="70"
+    bindtap="goToSearchResult"
+    data-index="{{index}}"
+    wx:for="{{bookList}}"
+    wx:key="index"
+  >
+    <view class="c-sidebar-item__text text-overflow"> {{ item }} </view>
+  </view>
+</view>
+</scroll-view>
+
 </view>

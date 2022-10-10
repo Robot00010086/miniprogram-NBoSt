@@ -13,7 +13,7 @@
 		<t-search
 		  t-class-input="t-search__input"
 		  t-class-input-container="t-search__input-container"
-		  placeholder="iphone 13 火热发售中"
+		  placeholder="输入书籍名称进行查询"
 		  leftIcon=""
 		  disabled
 		>
@@ -26,6 +26,7 @@
 			/>
 		</t-search>
 	</view>
+	<!--
 	<view class="swiper-wrap">
 		<t-swiper
 		  wx:if="{{imgSrcs.length > 0}}"
@@ -40,6 +41,7 @@
 			</t-swiper-item>
 		</t-swiper>
 	</view>
+	-->
 </view>
 <view class="home-page-container">
 	<t-tabs
@@ -58,12 +60,47 @@
 		  value="{{item.key}}"
 		/>
 	</t-tabs>
-	<goods-list
-	  wr-class="goods-list-container"
-	  goodsList="{{goodsList}}"
-	  bind:click="goodListClickHandle"
-	  bind:addcart="goodListAddCartHandle"
-	/>
+
+	<view class="goods-list-wrap wr-class" >
+		<block wx:for="{{goodsList}}" wx:for-item="item" wx:key="index" >
+	
+			<view class="goods-card">
+				<view class="goods-card__main">
+					<view class="goods-card__thumb" bindtap="gotoGoodsDetail" data-index="{{index}}">
+						<t-image
+			 				 t-class="goods-card__img"
+						  src="{{ item.image }}"
+						  mode="aspectFill"
+			 				 lazy-load
+						/>
+					</view>
+					<view class="goods-card__body" bindtap="gotoGoodsDetail" data-index="{{index}}">
+						<view class="goods-card__upper">
+							<view class="goods-card__title">
+								{{ item.name }}
+							</view>
+							<view class="goods-card__title">
+								{{ item.introduction }}
+							</view>
+						</view>
+					</view>
+					<view class="goods-card__down">
+			
+						<t-icon
+							class="goods-card__add-cart"
+							prefix="wr"
+							name="cartAdd"
+							id="{{independentID}}-cart"
+							data-id="{{independentID}}"
+							catchtap="addCartHandle"
+							size="48rpx"
+							color="#FA550F"
+						/>
+					</view>
+				</view>
+			</view>
+		</block>
+	</view>
 	<load-more list-is-empty="{{!goodsList.length}}" status="{{goodsListLoadStatus}}" bind:retry="onReTry" />
 	<t-toast id="t-toast" />
 </view>
