@@ -28,7 +28,9 @@
     "pages/order/fill-tracking-no/index",
     "pages/order/delivery-detail/index",
     "pages/order/invoice/index",
-    "pages/usercenter/name-edit/index"
+    "pages/usercenter/name-edit/index",
+    "pages/booksell/booksell",
+    "pages/booksell/chooseTag"
   ],
   "tabBar": {
     "custom": true,
@@ -56,12 +58,23 @@
     ]
   },
   "lazyCodeLoading": "requiredComponents",
-  "usingComponents": {},
+  "usingComponents": {
+    "van-button": "./miniprogram_npm/@vant/weapp/button/index",
+    "van-tabbar": "./miniprogram_npm/@vant/weapp/tabbar/index",
+    "van-cell": "./miniprogram_npm/@vant/weapp/cell/index",
+    "van-cell-group": "./miniprogram_npm/@vant/weapp/cell-group/index",
+    "van-picker": "./miniprogram_npm/@vant/weapp/picker/index",
+    "van-field": "./miniprogram_npm/@vant/weapp/field/index",
+    "van-tag": "./miniprogram_npm/@vant/weapp/tag/index",
+    "van-tree-select": "./miniprogram_npm/@vant/weapp/tree-select/index",
+    "van-divider": "./miniprogram_npm/@vant/weapp/divider/index",
+    "van-dialog": "./miniprogram_npm/@vant/weapp/dialog/index"
+  },
   "window": {
     "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#fff",
+    "navigationBarBackgroundColor": "#1989fa",
     "navigationBarTitleText": "Weixin",
-    "navigationBarTextStyle": "black"
+    "navigationBarTextStyle": "white"
   },
   "sitemapLocation": "sitemap.json",
   "permission": {

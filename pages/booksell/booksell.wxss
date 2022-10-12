@@ -1,0 +1,114 @@
+/* pages/booksell/booksell.wxss */
+.publish-page {
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-top: 20px;
+}
+.input-head {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  width: 98%;
+  height: 60rpx;
+  font-size: large;
+  font-style: italic;
+  font-weight: 300;
+}
+.input-text {
+  margin-top: 25rpx;
+  width: 98%;
+  font-style: italic;
+  margin: 1%;
+  height: 400rpx;
+  
+}
+
+.picker{
+  height: 80rpx;
+  line-height: 80rpx;
+  background-color: rgb(166, 210, 247);
+  font-size: 35rpx;
+  padding: 0 10px;
+  overflow: hidden;
+  border-radius: 10px;
+}
+
+.section__title{
+  font-size: 35rpx;
+  padding: 2px;
+  line-height: 80rpx;
+  font-weight: bold;
+}
+
+.tab-bar {
+  position: relative;
+  justify-content: space-around;
+  height: 105rpx;
+  display: flex;
+  flex-direction: row;
+  z-index: 19990125;
+  display: -webkit-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  padding-bottom: 10px;
+}
+
+.selector {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.tab-bar-icon {
+  position:absolute;
+  top: 11rpx;
+  width: 60rpx;
+  height: 60rpx;
+}
+
+.tab-bar-title {
+  position: absolute;
+  top: 73rpx;
+  font-size: 23rpx;
+  color: #727177;
+}
+
+.imageRootAll {
+  margin-top: 30rpx;
+  margin-bottom: 10rpx;
+  display: flex;
+  display: -webkit-flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.imgItem {
+  margin: 6rpx;
+  position: relative;
+  width: 176rpx;
+  height: 176rpx;
+  background: gainsboro;
+}
+
+.img {
+  width: 100%;
+  height: 100%;
+}
+
+.closeImg {
+  position: absolute;
+  right: 0px;
+  width: 32rpx;
+  height: 32rpx;
+}
+
+.photo {
+  width: 50%;
+  height: 50%;
+  margin: 25%;
+}
+
+.div{
+  margin:10px 0;
+}

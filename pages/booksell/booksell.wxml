@@ -1,0 +1,82 @@
+<!--卖家发布界面-->
+<view class="publish-page" wx:if="{{save==false}}">
+
+  <!-- 选择框 -->
+  <view class="section__title">课程类型：</view>
+  <picker bindchange="bindPickerChange1" value="{{index1}}" range="{{array1}}">
+    <view class="picker">
+      {{array1[index1]}}
+    </view>
+  </picker>
+  <view class="section__title">开课学院：</view>
+  <picker bindchange="bindPickerChange2" value="{{index2}}" range="{{array2}}">
+    <view class="picker">
+      {{array2[index2]}}
+    </view>
+  </picker>
+  <view class="section__title">书籍名称：</view>
+  <picker bindchange="bindPickerChange3" value="{{index3}}" range="{{array3}}">
+    <view class="picker">
+      {{array3[index3]}}
+    </view>
+  </picker>
+
+<!-- 价格 -->
+<van-cell-group>
+  <van-field
+    center clearable label="价格"
+    value="{{price}}"
+    type = "number"
+    placeholder="输入数字（支持小数）"
+    border="{{ false }}"
+    bind:change="inputprice"
+    required
+  />
+</van-cell-group>
+
+  <!--文本输入-->
+    <textarea class="input-head" placeholder="书籍名称" bindinput="getTitle" />
+    <van-divider custom-style="margin:10px 0;" />
+    <textarea class="input-text" placeholder="补充描述" bindinput="getInput" />
+
+  <!--展示tags-->
+  <view class="imageRootAll">
+    <block wx:for="{{tags}}" wx:key="id">
+      <view>
+        <van-tag  closeable round size="medium" type="primary" id="{{index}}" bind:close="onClosetag">{{item}}</van-tag>
+      </view>
+    </block>
+  </view>
+
+  <!--展示图片-->
+  <view class="imageRootAll">
+    <block wx:for="{{imgList}}" wx:key="index">
+      <view class="imgItem">
+        <image class="img" src='{{item}}' mode='aspectFill'></image>
+        <image class="closeImg" bindtap="DeleteImg" src="../../images/close.png" data-index="{{index}}"></image>
+      </view>
+    </block> 
+  </view>
+
+  <!-- 选择图片和标签按钮 --> 
+  <view class='tab-bar'>
+      <view class='selector' bindtap='onTagTabTap'>
+        <image class='tab-bar-icon' src='../../images/sticker.png' />
+        <text class='tab-bar-title'>+标签</text>
+      </view>
+      <view wx:if="{{imgList.length<8}}" bindtap="ChooseImage">
+        <image class='tab-bar-icon' src='../../images/image.png' />
+        <text class='tab-bar-title'>+图片</text>
+      </view>
+  </view>
+
+
+    <!--发布-->
+    <van-button color="#1989fa" bindtap="publish" block>发布书籍</van-button>
+
+</view>
+
+<!--保存成功界面-->
+<view class="save-success" wx:if="{{save}}">
+  <saveSucc txtContent="发布成功" />
+</view>
