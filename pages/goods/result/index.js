@@ -1,5 +1,7 @@
 /* eslint-disable no-param-reassign */
 import { getSearchResult } from '../../../services/good/featchSearchResult';
+import {getBooksByClassId,getBooksByKeyWords} from '../../../api/book/book'
+import {getSellerInfoById} from '../../../api/user/seller'
 import Toast from 'tdesign-miniprogram/toast/index';
 
 const initFilters = {
@@ -22,6 +24,9 @@ Page({
     keywords: '',
     loadMoreStatus: 0,
     loading: true,
+    entry:"",
+    classId:"",
+    seller:[]
   },
 
   total: 0,
@@ -30,14 +35,21 @@ Page({
 
   onLoad(options) {
     const { searchValue = '' } = options || {};
+    const {classId = ''}= options||{};
+    const {entry=''} =options||{};
     this.setData(
       {
         keywords: searchValue,
+        classId:classId,
+        entry:entry
       },
       () => {
         this.init(true);
       },
     );
+  },
+  gotoSellerIntro(){
+    console.log('gotouserdetails');
   },
 
   generalQueryData(reset = false) {
@@ -73,33 +85,41 @@ Page({
   async init(reset = true) {
     //api keywords search book id and info
     //console.log(this.data.keywords);
-    this.setData({
-      goodsList:[
-        {
-          id:1,
-          name:"hahah",
-          introduction:"info",
-          image:"https://cdn-we-retail.ym.tencent.com/tsr/goods/nz-09a.png",
-          seller:"seller"
-        },
-        {
-          id:2,
-          name:"hahah",
-          introduction:"info",
-          image:"https://cdn-we-retail.ym.tencent.com/tsr/goods/nz-09a.png",
-          seller:"seller"
-        },
-        {
-          id:3,
-          name:"hahah",
-          introduction:"info",
-          image:"https://cdn-we-retail.ym.tencent.com/tsr/goods/nz-09a.png",
-          seller:"seller"
-        }
+    if(this.data.entry==="className"){
+      const books=getBooksByClassId(this.data.classId);
+      let seller=new Array(books.length);
+      books.forEach((item,index)=>{
+        const seller_info=getSellerInfoById(item.seller_id);
+        seller[index]=seller_info;
+      });
+      // let book={
+      //   publish_id:"",
+      //   class_id:"",
+      //   seller_id:"",
+      //   title:"",
+      //   describe:"",
+      //   price:"",
+      //   image:""
+      // };
+      this.setData({
+        goodsList:books,
+        seller:seller
+      });
 
-
-      ]
-    });
+    }else{
+      //search entry
+      const books=getBooksByKeyWords(this.data.keywords);
+      let seller=new Array(books.length);
+      books.forEach((item,index)=>{
+        const seller_info=getSellerInfoById(item.seller_id);
+        seller[index]=seller_info;
+      });
+      this.setData({
+        goodsList:books,
+        seller:seller
+      });
+    }
+    
   },
 
   handleCartTap() {

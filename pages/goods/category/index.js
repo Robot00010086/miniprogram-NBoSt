@@ -1,7 +1,9 @@
 import { getCategoryList } from '../../../services/good/fetchCategoryList';
+import {getAllColledges,getClassesByColledgeName} from "../../../api/class/class"
 Page({
   data: {
-    list: [],
+    colledges: [],
+    classes:[],
     activeKey:0,
     subActiveKey:0,
     bookList:[]
@@ -10,6 +12,9 @@ Page({
     try {
      // const result = await getCategoryList();
      //api get all major and lessons
+     //get all class class_id  class_colledge class_name
+      const colledges=getAllColledges();
+      const classes=getClassesByColledgeName(colledges[0]);
      const result= [
       {
         name:"计算机学院",
@@ -204,10 +209,11 @@ Page({
       }
 
      ]
-     const bookList=["计算机网络-自顶向下方法","概率论与数理统计教程"];
+     const bookList=[];
     
       this.setData({
-        list: result,
+        colledges: colledges,
+        classes:classes,
         bookList:bookList
       });
     } catch (error) {
@@ -235,9 +241,12 @@ Page({
       activeKey:index,
       subActiveKey:0
     })
+    let classes=getClassesByColledgeName(this.data.colledges[index]);
+
     //api get booklist
     this.setData({
-      bookList:["计算机网络-自顶向下方法","概率论与数理统计教程"]
+      bookList:[],
+      classes:classes
     })
 
   },
@@ -252,7 +261,7 @@ Page({
    // console.log(this.data.list[this.data.activeKey].name+" "+this.data.list[this.data.activeKey].children[this.data.subActiveKey].name)
 
     this.setData({
-      bookList:["计算机网络-自顶向下方法","概率论与数理统计教程"]
+      bookList:[]
     })
   },
   goToSearchResult(e){
@@ -265,9 +274,10 @@ Page({
 
   },
   goToSearchLesson(){
-    const value=this.data.list[this.data.activeKey].name+" "+this.data.list[this.data.activeKey].children[this.data.subActiveKey].name;
+    const value=this.data.colledges[this.data.activeKey]+" "+this.data.classes[this.data.subActiveKey].class_name;
+    const class_id=this.data.classes[this.data.subActiveKey].class_id;
     wx.navigateTo({
-      url: `/pages/goods/result/index?searchValue=${value}`,
+      url: `/pages/goods/result/index?searchValue=${value}&classId=${class_id}&entry=className`,
     }); 
   }
 });

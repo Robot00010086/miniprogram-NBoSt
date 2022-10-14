@@ -8,10 +8,11 @@ page view {
 
 .result-container {
   display: block;
+  padding: 0 24rpx;
 }
 
 .result-container .t-search {
-  padding: 0 30rpx;
+  padding: 20rpx 30rpx;
   background-color: #fff;
 }
 
@@ -151,14 +152,29 @@ page view {
   overflow: hidden;
 }
 
+.goods-card__img_avatar {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
 .goods-card__body {
   display: flex;
   flex: 1 1 auto;
   background: #fff;
   border-radius: 0 0 16rpx 16rpx;
-  padding: 16rpx 24rpx 18rpx;
   flex-direction: column;
 }
+
+.goods-card__body_seller {
+  display: flex;
+  flex: 1 1 auto;
+  background: #fff;
+  border-radius: 0 0 16rpx 16rpx;
+  flex-direction: column;
+}
+
 
 .goods-card__upper {
   display: flex;
@@ -250,4 +266,42 @@ page view {
   justify-content: space-between;
   padding: 0;
   background: #fff;
+}
+
+
+
+.person-info__btn {
+  width: 100%;
+  border: 2rpx solid #ddd;
+  border-radius: 48rpx;
+  padding: 18rpx 0;
+  display: flex;
+  align-self: center;
+  justify-content: center;
+}
+.person-info__wrapper {
+  width: 100%;
+  padding: 0 32rpx;
+  padding-bottom: calc(env(safe-area-inset-bottom) + 20rpx);
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+
+.avatarUrl {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.t-class-confirm {
+  color: #fa550f !important;
+}
+
+.person-info .order-group__left {
+  margin-right: 0;
+}
+.person-info .t-cell-class {
+  height: 112rpx;
 }

@@ -1,29 +1,7 @@
 <view class="result-container">
-	<t-search
-	  t-class="t-search"
-	  t-class-input-container="t-class__input-container"
-	  t-class-left="t-search__left-icon"
-	  t-class-input="t-search__input"
-	  value="{{keywords}}"
-	  leftIcon=""
-	  rightIcon=""
-	  placeholder="输入书籍名称"
-	  bind:submit="handleSubmit"
-	>
-		<t-icon
-		  slot="left-icon"
-		  prefix="wr"
-		  name="search"
-		  size="40rpx"
-		  color="#bbb"
-		/>
-		<t-icon
-		  slot="right-icon"
-		  prefix="wr"
-		  name="clear_filled"
-		  size="40rpx"
-		  color="#bbb"
-		/>
+	<t-search t-class="t-search" t-class-input-container="t-class__input-container" t-class-left="t-search__left-icon" t-class-input="t-search__input" value="{{keywords}}" leftIcon="" rightIcon="" placeholder="输入书籍名称" bind:submit="handleSubmit">
+		<t-icon slot="left-icon" prefix="wr" name="search" size="40rpx" color="#bbb" />
+		<t-icon slot="right-icon" prefix="wr" name="clear_filled" size="40rpx" color="#bbb" />
 	</t-search>
 	<!--
 	<filter
@@ -66,41 +44,43 @@
 		</filter-popup>
 	</filter>
 	-->
-	<view class="goods-list-wrap wr-class" >
-		<block wx:for="{{goodsList}}" wx:for-item="item" wx:key="index" >
-	
+	<view class="goods-list-wrap wr-class">
+		<block wx:for="{{goodsList}}" wx:for-item="item" wx:key="index">
+
 			<view class="goods-card">
 				<view class="goods-card__main">
 					<view class="goods-card__thumb" bindtap="gotoGoodsDetail" data-index="{{index}}">
-						<t-image
-			 				 t-class="goods-card__img"
-						  src="{{ item.image }}"
-						  mode="aspectFill"
-			 				 lazy-load
-						/>
+						<t-image t-class="goods-card__img" src="{{item.image}}" mode="aspectFill" lazy-load />
 					</view>
 					<view class="goods-card__body" bindtap="gotoGoodsDetail" data-index="{{index}}">
 						<view class="goods-card__upper">
-							<view class="goods-card__title">
-								{{ item.name }}
+							<view style="margin-top:10rpx;">
+								{{ item.title }}
+							</view>
+							<!-- <view class="goods-card__title">
+								{{ item.describe }}
+							</view> -->
+							<!-- <view class="goods-card__title">
+								{{ item.seller_id }}
 							</view>
 							<view class="goods-card__title">
-								{{ item.introduction }}
-							</view>
+								{{ item.publish_id }} 
+							</view>-->
+						</view>
+					</view>
+
+					<view class="goods-card__body_seller" bindtap="gotoSellerIntro" data-index="{{index}}">
+						<view class="goods-card__upper">
+							<t-cell title="{{seller[index].seller_name}}" center="{{true}}" data-type="avatarUrl" t-class-left="order-group__left">
+								<t-image slot="note" src="{{seller[index].seller_avatar}}" t-class="avatarUrl" mode="aspectFill" />
+
+							</t-cell>
+
 						</view>
 					</view>
 					<view class="goods-card__down">
-			
-						<t-icon
-							class="goods-card__add-cart"
-							prefix="wr"
-							name="cartAdd"
-							id="{{independentID}}-cart"
-							data-id="{{independentID}}"
-							catchtap="addCartHandle"
-							size="48rpx"
-							color="#FA550F"
-						/>
+
+						<t-icon class="goods-card__add-cart" prefix="wr" name="cartAdd" id="{{independentID}}-cart" data-id="{{independentID}}" catchtap="addCartHandle" size="48rpx" color="#FA550F" />
 					</view>
 				</view>
 			</view>
@@ -109,4 +89,3 @@
 	<load-more wx:if="{{goodsList.length > 0}}" status="{{loadMoreStatus}}" no-more-text="没有更多了" />
 </view>
 <t-toast id="t-toast" />
-
