@@ -165,7 +165,7 @@ Page({
      const index=parseInt(e.currentTarget.dataset.index);
      //console.log(index);
      wx.navigateTo({
-       url: `/pages/goods/details/index?id=${this.data.goodsList[index].id}`,
+       url: `/pages/goods/details/index?id=${this.data.goodsList[index].publish_id}`,
      });
  
    },

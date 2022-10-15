@@ -354,3 +354,10 @@ page {
   font-size: 28rpx;
   font-weight: 400;
 }
+
+.avatarUrl {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+  overflow: hidden;
+}

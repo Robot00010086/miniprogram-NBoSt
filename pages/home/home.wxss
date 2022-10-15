@@ -105,10 +105,11 @@ page {
 
 
 .goods-card {
+  border-color: #111111;
+  border-style: dashed;
   box-sizing: border-box;
   font-size: 24rpx;
   border-radius: 0 0 16rpx 16rpx;
-  border-bottom: none;
 }
 
 .goods-card__main {

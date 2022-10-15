@@ -7,6 +7,9 @@ import {
 } from '../../../services/good/fetchGoodsDetailsComments';
 
 import { cdnBase } from '../../../config/index';
+import {getBooksByClassId, getBooksByPublishId,getBookImages}  from '../../../api/book/book';
+import {getSellerInfoById} from '../../../api/user/seller';
+import {getClassInfoById} from '../../../api/class/class'
 
 const imgPrefix = `${cdnBase}/`;
 
@@ -80,9 +83,9 @@ Page({
     */
    id: 0,
    images:[],
-   name:"",
-   introduction:"",
-   seller:"",
+   seller:{},
+   book:{},
+   class_info:{},
    current: 0,
    autoplay: true,
    duration: 500,
@@ -217,7 +220,7 @@ Page({
       this.setData({
         selectedAttrStr: selectSpecsName,
       });
-    } else {
+    } else {z
       this.setData({
         selectedAttrStr: '',
       });
@@ -353,11 +356,15 @@ Page({
       });
     });*/
     //api get goodinfo  id
+    const book=getBooksByPublishId(this.data.id);
+    const seller=getSellerInfoById(book.seller_id);
+    const class_info=getClassInfoById(book.class_id);
+    const images=getBookImages(book.publish_id);
     this.setData({
-      name:"hahah",
-      introduction:"info",
-     images:["https://cdn-we-retail.ym.tencent.com/tsr/goods/nz-09a.png","https://cdn-we-retail.ym.tencent.com/tsr/goods/nz-09a.png"],
-      seller:"seller"
+     book:book,
+     seller:seller,
+     class_info:class_info,
+     images:images
 
     })
   },

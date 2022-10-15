@@ -34,13 +34,13 @@ Page({
   },
 
   onReachBottom() {
-    if (this.data.goodsListLoadStatus === 0) {
-      this.loadGoodsList();
-    }
+    // if (this.data.goodsListLoadStatus === 0) {
+    //   this.loadGoodsList();
+    // }
   },
 
   onPullDownRefresh() {
-    this.init();
+    // this.init();
   },
 
   init() {
@@ -48,46 +48,49 @@ Page({
   },
 
   loadHomePage() {
-    wx.stopPullDownRefresh();
+    // wx.stopPullDownRefresh();
 
-    this.setData({
-      pageLoading: true,
-    });
+    // this.setData({
+    //   pageLoading: true,
+    // });
     fetchHome().then(({ swiper, tabList }) => {
       this.setData({
         tabList,
         imgSrcs: swiper,
         pageLoading: false,
       });
+
       this.setData({
-        goodsList:[
+        goodsList: [
           {
-            id:1,
-            name:"hahah",
-            introduction:"info",
-            image:"https://cdn-we-retail.ym.tencent.com/tsr/goods/nz-09a.png",
-            seller:"seller"
+            id: 1,
+            name: "hahah",
+            introduction: "info",
+            image: "https://cdn-we-retail.ym.tencent.com/tsr/goods/nz-09a.png",
+            seller: "seller"
           },
           {
-            id:2,
-            name:"hahah",
-            introduction:"info",
-            image:"https://cdn-we-retail.ym.tencent.com/tsr/goods/nz-09a.png",
-            seller:"seller"
+            id: 2,
+            name: "hahah",
+            introduction: "info",
+            image: "https://cdn-we-retail.ym.tencent.com/tsr/goods/nz-09a.png",
+            seller: "seller"
           },
           {
-            id:3,
-            name:"hahah",
-            introduction:"info",
-            image:"https://cdn-we-retail.ym.tencent.com/tsr/goods/nz-09a.png",
-            seller:"seller"
+            id: 3,
+            name: "hahah",
+            introduction: "info",
+            image: "https://cdn-we-retail.ym.tencent.com/tsr/goods/nz-09a.png",
+            seller: "seller"
           }
 
 
         ]
 
       });
-      //this.loadGoodsList(true);
+      //   //this.loadGoodsList(true);
+      // });
+
     });
   },
 
@@ -149,9 +152,9 @@ Page({
     });
   },
 
-  gotoGoodsDetail(e){
-   // console.log(e);
-    const index=parseInt(e.currentTarget.dataset.index);
+  gotoGoodsDetail(e) {
+    // console.log(e);
+    const index = parseInt(e.currentTarget.dataset.index);
     //console.log(index);
     wx.navigateTo({
       url: `/pages/goods/details/index?id=${this.data.goodsList[index].id}`,
