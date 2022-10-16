@@ -1,6 +1,6 @@
-export function getBaseInfo(){
+export function getBaseInfo() {
   return {
-    baseUrl:"http://ip:port/",
-    env:"development"
+    baseUrl: "http://40104e74.r2.cpolar.top/",
+    env: "product"
   };
 }

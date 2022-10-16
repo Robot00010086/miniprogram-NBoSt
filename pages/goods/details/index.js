@@ -7,10 +7,11 @@ import {
 } from '../../../services/good/fetchGoodsDetailsComments';
 
 import { cdnBase } from '../../../config/index';
-import {getBooksByClassId, getBooksByPublishId,getBookImages}  from '../../../api/book/book';
-import {getSellerInfoById} from '../../../api/user/seller';
-import {getClassInfoById} from '../../../api/class/class'
-
+import { getBooksByClassId, getBooksByPublishId, getBookImages } from '../../../api/book/book';
+import { getSellerInfoById } from '../../../api/user/seller';
+import { getClassInfoById } from '../../../api/class/class'
+import { getBaseInfo } from '../../../api/base'
+import { weBtoa } from '../../../utils/weapp-jwt'
 const imgPrefix = `${cdnBase}/`;
 
 const recLeftImg = `${imgPrefix}common/rec-left.png`;
@@ -26,75 +27,75 @@ const obj2Params = (obj = {}, encode = false) => {
 
 Page({
   data: {
-  /*  commentsList: [],
-    commentsStatistics: {
-      badCount: 0,
-      commentCount: 0,
-      goodCount: 0,
-      goodRate: 0,
-      hasImageCount: 0,
-      middleCount: 0,
-    },
-    isShowPromotionPop: false,
-    activityList: [],
-    recLeftImg,
-    recRightImg,
-    goodsTabArray: [
-      {
-        name: '商品',
-        value: '', // 空字符串代表置顶
+    /*  commentsList: [],
+      commentsStatistics: {
+        badCount: 0,
+        commentCount: 0,
+        goodCount: 0,
+        goodRate: 0,
+        hasImageCount: 0,
+        middleCount: 0,
       },
-      {
-        name: '详情',
-        value: 'goods-page',
-      },
-    ],
-    storeLogo: `${imgPrefix}common/store-logo.png`,
-    storeName: '云mall标准版旗舰店',
-    jumpArray: [
-      {
-        title: '首页',
-        url: '/pages/home/home',
-        iconName: 'home',
-      },
-      {
-        title: '购物车',
-        url: '/pages/cart/index',
-        iconName: 'cart',
-        showCartNum: true,
-      },
-    ],
-    isStock: true,
-    cartNum: 0,
-    soldout: false,
-    buttonType: 1,
-    buyNum: 1,
-    selectedAttrStr: '',
-    skuArray: [],
-    primaryImage: '',
-    specImg: '',
-    isSpuSelectPopupShow: false,
-    isAllSelectedSku: false,
-    buyType: 0,
-    outOperateStatus: false, // 是否外层加入购物车
-    operateType: 0,
-    selectSkuSellsPrice: 0,
-    list: [],
-    */
-   id: 0,
-   images:[],
-   seller:{},
-   book:{},
-   class_info:{},
-   current: 0,
-   autoplay: true,
-   duration: 500,
-   interval: 5000,
-   navigation: { type: 'fraction' },
-   maxLinePrice: 0,
-   minSalePrice: 0,
-   maxSalePrice: 0,
-   soldNum: 0
+      isShowPromotionPop: false,
+      activityList: [],
+      recLeftImg,
+      recRightImg,
+      goodsTabArray: [
+        {
+          name: '商品',
+          value: '', // 空字符串代表置顶
+        },
+        {
+          name: '详情',
+          value: 'goods-page',
+        },
+      ],
+      storeLogo: `${imgPrefix}common/store-logo.png`,
+      storeName: '云mall标准版旗舰店',
+      jumpArray: [
+        {
+          title: '首页',
+          url: '/pages/home/home',
+          iconName: 'home',
+        },
+        {
+          title: '购物车',
+          url: '/pages/cart/index',
+          iconName: 'cart',
+          showCartNum: true,
+        },
+      ],
+      isStock: true,
+      cartNum: 0,
+      soldout: false,
+      buttonType: 1,
+      buyNum: 1,
+      selectedAttrStr: '',
+      skuArray: [],
+      primaryImage: '',
+      specImg: '',
+      isSpuSelectPopupShow: false,
+      isAllSelectedSku: false,
+      buyType: 0,
+      outOperateStatus: false, // 是否外层加入购物车
+      operateType: 0,
+      selectSkuSellsPrice: 0,
+      list: [],
+      */
+    id: 0,
+    images: [],
+    seller: {},
+    book: {},
+    class_info: {},
+    current: 0,
+    autoplay: true,
+    duration: 500,
+    interval: 5000,
+    navigation: { type: 'fraction' },
+    maxLinePrice: 0,
+    minSalePrice: 0,
+    maxSalePrice: 0,
+    soldNum: 0
   },
 
   handlePopupHide() {
@@ -220,7 +221,8 @@ Page({
       this.setData({
         selectedAttrStr: selectSpecsName,
       });
-    } else {z
+    } else {
+      z
       this.setData({
         selectedAttrStr: '',
       });
@@ -356,17 +358,83 @@ Page({
       });
     });*/
     //api get goodinfo  id
-    const book=getBooksByPublishId(this.data.id);
-    const seller=getSellerInfoById(book.seller_id);
-    const class_info=getClassInfoById(book.class_id);
-    const images=getBookImages(book.publish_id);
-    this.setData({
-     book:book,
-     seller:seller,
-     class_info:class_info,
-     images:images
+    const { baseUrl, env } = getBaseInfo();
+    let that = this;
+    if (env === 'development') {
+      const book = getBooksByPublishId(this.data.id);
+      const seller = getSellerInfoById(book.seller_id);
+      const class_info = getClassInfoById(book.class_id);
+      const images = getBookImages(book.publish_id);
+      this.setData({
+        book: book,
+        seller: seller,
+        class_info: class_info,
+        images: images
 
-    })
+      })
+    } else {
+      wx.request({
+        url: baseUrl + "bookcommodity/find/bookcommodity",
+        method: "POST",
+        data: {
+          publish_id: that.data.id
+        },
+        success(res) {
+          if (res.data.status === 0) {
+            const books = res.data.res;
+            console.log(books);
+            books.price *= 100;
+            that.setData({
+              book: books
+            })
+            wx.request({
+              url: baseUrl + "user/select/user",
+              method: "POST",
+              data: {
+                sellerId: books.seller_id
+              },
+              success(res) {
+                if (res.data.status === 0) {
+                  console.log(res);
+                  const seller_info = res.data.res;
+                  seller_info.image = 'data:image/png;base64,' + weBtoa(encodeURIComponent(seller_info.image));
+                  console.log(seller_info.image);
+                  that.setData({
+                    seller: seller_info
+                  })
+                }
+
+              }
+            });
+
+
+            wx.request({
+              url: baseUrl + "class/find/class",
+              method: "POST",
+              data: {
+                classId: books.class_id
+              },
+              success(res) {
+                if (res.data.status === 0) {
+                  const class_info = res.data.res;
+                  that.setData({
+                    class_info: class_info
+                  })
+                }
+
+              }
+            });
+          }
+
+        }
+      });
+
+
+
+
+    }
+
+
   },
 
   async getCommentsList() {
@@ -457,7 +525,7 @@ Page({
     });
     console.log(id);
     this.getDetail(id);
-   // this.getCommentsList(spuId);
-   // this.getCommentsStatistics(spuId);
+    // this.getCommentsList(spuId);
+    // this.getCommentsStatistics(spuId);
   },
 });

@@ -1,9 +1,10 @@
 /* eslint-disable no-param-reassign */
 import { getSearchResult } from '../../../services/good/featchSearchResult';
-import {getBooksByClassId,getBooksByKeyWords} from '../../../api/book/book'
-import {getSellerInfoById} from '../../../api/user/seller'
+import { getBooksByClassId, getBooksByKeyWords } from '../../../api/book/book'
+import { getSellerInfoById } from '../../../api/user/seller'
 import Toast from 'tdesign-miniprogram/toast/index';
-
+import { getBaseInfo } from '../../../api/base'
+import { weBtoa } from '../../../utils/weapp-jwt'
 const initFilters = {
   overall: 1,
   sorts: '',
@@ -24,9 +25,9 @@ Page({
     keywords: '',
     loadMoreStatus: 0,
     loading: true,
-    entry:"",
-    classId:"",
-    seller:[]
+    entry: "",
+    classId: "",
+    seller: []
   },
 
   total: 0,
@@ -35,20 +36,20 @@ Page({
 
   onLoad(options) {
     const { searchValue = '' } = options || {};
-    const {classId = ''}= options||{};
-    const {entry=''} =options||{};
+    const { classId = '' } = options || {};
+    const { entry = '' } = options || {};
     this.setData(
       {
         keywords: searchValue,
-        classId:classId,
-        entry:entry
+        classId: classId,
+        entry: entry
       },
       () => {
         this.init(true);
       },
     );
   },
-  gotoSellerIntro(){
+  gotoSellerIntro() {
     console.log('gotouserdetails');
   },
 
@@ -85,41 +86,106 @@ Page({
   async init(reset = true) {
     //api keywords search book id and info
     //console.log(this.data.keywords);
-    if(this.data.entry==="className"){
-      const books=getBooksByClassId(this.data.classId);
-      let seller=new Array(books.length);
-      books.forEach((item,index)=>{
-        const seller_info=getSellerInfoById(item.seller_id);
-        seller[index]=seller_info;
-      });
-      // let book={
-      //   publish_id:"",
-      //   class_id:"",
-      //   seller_id:"",
-      //   title:"",
-      //   describe:"",
-      //   price:"",
-      //   image:""
-      // };
-      this.setData({
-        goodsList:books,
-        seller:seller
-      });
+    if (this.data.entry === "className") {
 
-    }else{
+      let { baseUrl, env } = getBaseInfo();
+      if (env !== 'development') {
+        let that = this;
+        wx.request({
+          url: baseUrl + "bookcommodity/find/classbookcommodity",
+          method: "POST",
+          data: {
+            class_id: that.data.classId
+          },
+          success(res) {
+            console.log(that.data.classId);
+            console.log(res);
+            if (res.data.status === 0) {
+              const books = res.data.res;
+              console.log(books);
+              let seller = new Array(books.length);
+              console.log(that.data.classId);
+              that.setData({
+                goodsList: books,
+                seller: seller
+              })
+              books.forEach((item, index) => {
+                console.log(item.seller_id);
+                wx.request({
+                  url: baseUrl + "user/select/user",
+                  method: "POST",
+                  data: {
+                    sellerId: item.seller_id
+                  },
+                  success(res) {
+                    console.log(res);
+                    if (res.data.status === 0) {
+                      console.log(res.data.res);
+                      let seller_info = res.data.res;
+                      seller_info.image = 'data:image/png;base64,' + weBtoa(encodeURIComponent(seller_info.image));
+                      console.log(seller_info.image);
+                      that.setData({
+                        ['seller[' + index + ']']: seller_info
+                      })
+                    }
+
+                  }
+                });
+
+              })
+              // books.forEach((item,index)=>{
+              //   const seller_info=getSellerInfoById(item.seller_id);
+              //   seller[index]=seller_info;
+              // });
+            }
+
+          }
+        });
+
+
+
+
+
+      } else {
+
+        const books = getBooksByClassId(this.data.classId);
+        let seller = new Array(books.length);
+        books.forEach((item, index) => {
+
+          const seller_info = getSellerInfoById(item.seller_id);
+          seller[index] = seller_info;
+        });
+        // let book={
+        //   publish_id:"",
+        //   class_id:"",
+        //   seller_id:"",
+        //   title:"",
+        //   describe:"",
+        //   price:"",
+        //   image:""
+        // };
+        this.setData({
+          goodsList: books,
+          seller: seller
+        });
+
+      }
+
+
+    } else {
       //search entry
-      const books=getBooksByKeyWords(this.data.keywords);
-      let seller=new Array(books.length);
-      books.forEach((item,index)=>{
-        const seller_info=getSellerInfoById(item.seller_id);
-        seller[index]=seller_info;
+      const books = getBooksByKeyWords(this.data.keywords);
+      let seller = new Array(books.length);
+      books.forEach((item, index) => {
+        const seller_info = getSellerInfoById(item.seller_id);
+        seller[index] = seller_info;
       });
       this.setData({
-        goodsList:books,
-        seller:seller
+        goodsList: books,
+        seller: seller
       });
     }
-    
+
   },
 
   handleCartTap() {
@@ -160,15 +226,15 @@ Page({
     });
   },
 
-  gotoGoodsDetail(e){
+  gotoGoodsDetail(e) {
     // console.log(e);
-     const index=parseInt(e.currentTarget.dataset.index);
-     //console.log(index);
-     wx.navigateTo({
-       url: `/pages/goods/details/index?id=${this.data.goodsList[index].publish_id}`,
-     });
- 
-   },
+    const index = parseInt(e.currentTarget.dataset.index);
+    //console.log(index);
+    wx.navigateTo({
+      url: `/pages/goods/details/index?id=${this.data.goodsList[index].publish_id}`,
+    });
+
+  },
 
   handleFilterChange(e) {
     const { overall, sorts } = e.detail;

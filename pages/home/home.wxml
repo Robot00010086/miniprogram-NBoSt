@@ -33,30 +33,33 @@
 		</t-tabs>
 
 		<view class="goods-list-wrap wr-class">
-			<block wx:for="{{goodsList}}" wx:for-item="item" wx:key="index">
+			<view wx:if="{{goodsList.length!==0}}">
+				<block wx:for="{{goodsList}}" wx:for-item="item" wx:key="index">
 
-				<view class="goods-card">
-					<view class="goods-card__main">
-						<view class="goods-card__thumb" bindtap="gotoGoodsDetail" data-index="{{index}}">
-							<t-image t-class="goods-card__img" src="{{ item.image }}" mode="aspectFill" lazy-load />
-						</view>
-						<view class="goods-card__body" bindtap="gotoGoodsDetail" data-index="{{index}}">
-							<view class="goods-card__upper">
-								<view class="goods-card__title">
-									{{ item.name }}
-								</view>
-								<view class="goods-card__title">
-									{{ item.introduction }}
+					<view class="goods-card">
+						<view class="goods-card__main">
+							<view class="goods-card__thumb" bindtap="gotoGoodsDetail" data-index="{{index}}">
+								<t-image t-class="goods-card__img" src="{{ item.image }}" mode="aspectFill" lazy-load />
+							</view>
+							<view class="goods-card__body" bindtap="gotoGoodsDetail" data-index="{{index}}">
+								<view class="goods-card__upper">
+									<view class="goods-card__title">
+										{{ item.name }}
+									</view>
+									<view class="goods-card__title">
+										{{ item.introduction }}
+									</view>
 								</view>
 							</view>
-						</view>
-						<view class="goods-card__down">
+							<view class="goods-card__down">
 
-							<t-icon class="goods-card__add-cart" prefix="wr" name="cartAdd" id="{{independentID}}-cart" data-id="{{independentID}}" catchtap="addCartHandle" size="48rpx" color="#FA550F" />
+								<t-icon class="goods-card__add-cart" prefix="wr" name="cartAdd" id="{{independentID}}-cart" data-id="{{independentID}}" catchtap="addCartHandle" size="48rpx" color="#FA550F" />
+							</view>
 						</view>
 					</view>
-				</view>
-			</block>
+				</block>
+			</view>
+			<view wx:else>{{"nothing"}}</view>
 		</view>
 		<t-toast id="t-toast" />
 	</view>

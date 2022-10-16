@@ -71,8 +71,8 @@
 
 					<view class="goods-card__body_seller" bindtap="gotoSellerIntro" data-index="{{index}}">
 						<view class="goods-card__upper">
-							<t-cell title="{{seller[index].seller_name}}" center="{{true}}" data-type="avatarUrl" t-class-left="order-group__left">
-								<t-image slot="note" src="{{seller[index].seller_avatar}}" t-class="avatarUrl" mode="aspectFill" />
+							<t-cell title="{{seller[index].name}}" center="{{true}}" data-type="avatarUrl" t-class-left="order-group__left">
+								<t-image slot="note" src="{{seller[index].image}}" t-class="avatarUrl" mode="aspectFill" />
 
 							</t-cell>
 

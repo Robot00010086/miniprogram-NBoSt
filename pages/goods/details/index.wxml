@@ -26,8 +26,8 @@
 		<view class="goods-intro">{{book.describe}}</view>
 		<view class="goods-intro">
 
-			<t-cell title="selled by {{seller.seller_name}}" center="{{true}}" data-type="avatarUrl">
-				<t-image slot="note" src="{{seller.seller_avatar}}" t-class="avatarUrl" mode="aspectFill" style="margin-left:250rpx" />
+			<t-cell title="selled by {{seller.name}}" center="{{true}}" data-type="avatarUrl">
+				<t-image slot="note" src="{{seller.image}}" t-class="avatarUrl" mode="aspectFill" style="margin-left:250rpx" />
 			</t-cell>
 
 		</view>

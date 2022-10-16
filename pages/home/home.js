@@ -62,27 +62,27 @@ Page({
 
       this.setData({
         goodsList: [
-          {
-            id: 1,
-            name: "hahah",
-            introduction: "info",
-            image: "https://cdn-we-retail.ym.tencent.com/tsr/goods/nz-09a.png",
-            seller: "seller"
-          },
-          {
-            id: 2,
-            name: "hahah",
-            introduction: "info",
-            image: "https://cdn-we-retail.ym.tencent.com/tsr/goods/nz-09a.png",
-            seller: "seller"
-          },
-          {
-            id: 3,
-            name: "hahah",
-            introduction: "info",
-            image: "https://cdn-we-retail.ym.tencent.com/tsr/goods/nz-09a.png",
-            seller: "seller"
-          }
+          // {
+          //   id: 1,
+          //   name: "hahah",
+          //   introduction: "info",
+          //   image: "https://cdn-we-retail.ym.tencent.com/tsr/goods/nz-09a.png",
+          //   seller: "seller"
+          // },
+          // {
+          //   id: 2,
+          //   name: "hahah",
+          //   introduction: "info",
+          //   image: "https://cdn-we-retail.ym.tencent.com/tsr/goods/nz-09a.png",
+          //   seller: "seller"
+          // },
+          // {
+          //   id: 3,
+          //   name: "hahah",
+          //   introduction: "info",
+          //   image: "https://cdn-we-retail.ym.tencent.com/tsr/goods/nz-09a.png",
+          //   seller: "seller"
+          // }
 
 
         ]

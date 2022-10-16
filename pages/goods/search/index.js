@@ -2,7 +2,7 @@ import {
   getSearchHistory,
   getSearchPopular,
 } from '../../../services/good/fetchSearchHistory';
-
+import { getBaseInfo } from '../../../api/base'
 Page({
   data: {
     historyWords: [],
@@ -40,10 +40,10 @@ Page({
       console.error(error);
     }
     */
-   //api get history
-   this.setData({
-     historyWords:["计算机网络","概率论与数理统计"]
-   })
+    //api get history
+    this.setData({
+      historyWords: ["计算机网络", "概率论与数理统计"]
+    })
   },
 
   async queryPopular() {
@@ -61,11 +61,11 @@ Page({
       console.error(error);
     }
     */
-   //api get popular words
-   this.setData({
-      popularWords:["计算机体系结构","计算机图形学"]
+    //api get popular words
+    this.setData({
+      popularWords: ["计算机体系结构", "计算机图形学"]
 
-   })
+    })
   },
 
   confirm() {
@@ -98,10 +98,10 @@ Page({
       dialogShow: true,
     });
     */
-   //api clear history
-   this.setData({
-     historyWords:[]
-   })
+    //api clear history
+    this.setData({
+      historyWords: []
+    })
 
   },
 
@@ -141,7 +141,7 @@ Page({
   },
 
   handleSubmit(e) {
-    const  value  = e.detail.value;
+    const value = e.detail.value;
     //console.log(this.data.searchValue);
     //console.log(e.detail)
     if (value.length === 0) return;
@@ -151,7 +151,7 @@ Page({
   },
   goToSearchResult(e) {
     console.log(this.data.searchValue);
-    if(!this.searchValue || this.data.searchValue.length==0){
+    if (!this.searchValue || this.data.searchValue.length == 0) {
       return;
     }
     wx.navigateTo({

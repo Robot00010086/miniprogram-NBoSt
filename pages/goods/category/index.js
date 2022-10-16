@@ -1,221 +1,53 @@
 import { getCategoryList } from '../../../services/good/fetchCategoryList';
-import {getAllColledges,getClassesByColledgeName} from "../../../api/class/class"
+import { getAllColledges, getClassesByColledgeName } from "../../../api/class/class"
+import { getBaseInfo } from '../../../api/base'
+
 Page({
   data: {
     colledges: [],
-    classes:[],
-    activeKey:0,
-    subActiveKey:0,
-    bookList:[]
+    classes: [],
+    activeKey: 0,
+    subActiveKey: 0,
+    bookList: []
   },
   async init() {
     try {
-     // const result = await getCategoryList();
-     //api get all major and lessons
-     //get all class class_id  class_colledge class_name
-      const colledges=getAllColledges();
-      const classes=getClassesByColledgeName(colledges[0]);
-     const result= [
-      {
-        name:"计算机学院",
-        children:[
-          {
-            name:"计算机网络",
-          },
-          {
-            name:"计算机图形学"
-          },
-          {
-            name:"计算机图形学"
-          },
-          {
-            name:"计算机图形学"
-          },
-          {
-            name:"计算机图形学"
-          },
-          {
-            name:"计算机图形学"
-          },
-          {
-            name:"计算机图形学"
-          },
-          {
-            name:"计算机图形学"
-          },
-          {
-            name:"计算机图形学"
-          },
-          {
-            name:"计算机图形学"
-          },
-          {
-            name:"计算机图形学"
-          },
-          {
-            name:"计算机图形学"
-          },
-          {
-            name:"计算机组成与体系结构"
-          },
-          {
-            name:"计算机图形学"
-          },
-          {
-            name:"计算机图形学"
-          }
-        ]
-      },
-      {
-        name:"数学学院",
-        children:[
-          {
-            name:"计算机网络",
-          },
-          {
-            name:"计算机图形学"
-          }
-        ]
-      },
-      {
-        name:"新闻与传播",
-        children:[
-          {
-            name:"计算机网络",
-          },
-          {
-            name:"计算机图形学"
-          }
-        ]
-      },
-      {
-        name:"外语学院",
-        children:[
-          {
-            name:"计算机网络",
-          },
-          {
-            name:"计算机图形学"
-          }
-        ]
-      },
-      {
-        name:"外语学院",
-        children:[
-          {
-            name:"计算机网络",
-          },
-          {
-            name:"计算机图形学"
-          }
-        ]
-      },
-      {
-        name:"外语学院",
-        children:[
-          {
-            name:"计算机网络",
-          },
-          {
-            name:"计算机图形学"
-          }
-        ]
-      },
-      {
-        name:"外语学院",
-        children:[
-          {
-            name:"计算机网络",
-          },
-          {
-            name:"计算机图形学"
-          }
-        ]
-      },
-      {
-        name:"外语学院",
-        children:[
-          {
-            name:"计算机网络",
-          },
-          {
-            name:"计算机图形学"
-          }
-        ]
-      },
-      {
-        name:"外语学院",
-        children:[
-          {
-            name:"计算机网络",
-          },
-          {
-            name:"计算机图形学"
-          }
-        ]
-      },   {
-        name:"外语学院",
-        children:[
-          {
-            name:"计算机网络",
-          },
-          {
-            name:"计算机图形学"
-          }
-        ]
-      },
-      {
-        name:"外语学院",
-        children:[
-          {
-            name:"计算机网络",
-          },
-          {
-            name:"计算机图形学"
-          }
-        ]
-      },   {
-        name:"外语学院",
-        children:[
-          {
-            name:"计算机网络",
-          },
-          {
-            name:"计算机图形学"
-          }
-        ]
-      },
-      {
-        name:"外语学院",
-        children:[
-          {
-            name:"计算机网络",
-          },
-          {
-            name:"计算机图形学"
-          }
-        ]
-      },
-      {
-        name:"外语学院",
-        children:[
-          {
-            name:"计算机网络",
-          },
-          {
-            name:"计算机图形学"
-          }
-        ]
-      }
+      // const result = await getCategoryList();
+      //api get all major and lessons
+      //get all class class_id  class_colledge class_name
+      let { baseUrl } = getBaseInfo();
+      let that = this;
+      wx.request({
+        url: baseUrl + "class/find/allcolleges",
+        method: "GET",
+        success(res) {
+          const colledges = res.data;
+          // console.log(colledges);
 
-     ]
-     const bookList=[];
-    
-      this.setData({
-        colledges: colledges,
-        classes:classes,
-        bookList:bookList
-      });
+          wx.request({
+            url: baseUrl + "class/find/collegeclass",
+            method: "POST",
+            data: {
+              colledge_name: colledges[0]
+            },
+            success(res) {
+              const classes = res.data.res;
+              // console.log(classes);
+              const bookList = [];
+              that.setData({
+                colledges: colledges,
+                classes: classes,
+                bookList: bookList
+              });
+            }
+          });
+
+        }
+
+
+      }
+      );
+
     } catch (error) {
       console.error('err:', error);
     }
@@ -232,52 +64,64 @@ Page({
   onLoad() {
     this.init(true);
   },
-  onClick(e){
-    const index=parseInt(e.currentTarget.dataset.index);
-   // console.log(index);
-   // const item=this.data.list[index];
+  onClick(e) {
+    const index = parseInt(e.currentTarget.dataset.index);
+    // console.log(index);
+    // const item=this.data.list[index];
     //console.log(item.name);
     this.setData({
-      activeKey:index,
-      subActiveKey:0
+      activeKey: index,
+      subActiveKey: 0
     })
-    let classes=getClassesByColledgeName(this.data.colledges[index]);
+    let { baseUrl } = getBaseInfo();
+    let that = this;
+    wx.request({
+      url: baseUrl + "class/find/collegeclass",
+      method: "POST",
+      data: {
+        colledge_name: that.data.colledges[index]
+      },
+      success(res) {
+        const classes = res.data.res;
 
-    //api get booklist
-    this.setData({
-      bookList:[],
-      classes:classes
-    })
+        //api get booklist
+        that.setData({
+          bookList: [],
+          classes: classes
+        });
+
+      }
+    });
 
   },
-  onClickSub(e){
-    const index=parseInt(e.currentTarget.dataset.index);
-   // console.log(index);
-   // const item=this.data.list[index];
+  onClickSub(e) {
+    const index = parseInt(e.currentTarget.dataset.index);
+    // console.log(index);
+    // const item=this.data.list[index];
     //console.log(item.name);
     this.setData({
-      subActiveKey:index
+      subActiveKey: index
     })
-   // console.log(this.data.list[this.data.activeKey].name+" "+this.data.list[this.data.activeKey].children[this.data.subActiveKey].name)
+    // console.log(this.data.list[this.data.activeKey].name+" "+this.data.list[this.data.activeKey].children[this.data.subActiveKey].name)
 
     this.setData({
-      bookList:[]
+      bookList: []
     })
   },
-  goToSearchResult(e){
-    const index=parseInt(e.currentTarget.dataset.index);
-   //console.log(index+"----"+this.data.bookList[index]);
-   const value=this.data.bookList[index];
-   wx.navigateTo({
-    url: `/pages/goods/result/index?searchValue=${value}`,
-  });
+  goToSearchResult(e) {
+    const index = parseInt(e.currentTarget.dataset.index);
+    //console.log(index+"----"+this.data.bookList[index]);
+    const value = this.data.bookList[index];
+    wx.navigateTo({
+      url: `/pages/goods/result/index?searchValue=${value}`,
+    });
 
   },
-  goToSearchLesson(){
-    const value=this.data.colledges[this.data.activeKey]+" "+this.data.classes[this.data.subActiveKey].class_name;
-    const class_id=this.data.classes[this.data.subActiveKey].class_id;
+  goToSearchLesson() {
+    const value = this.data.colledges[this.data.activeKey] + " " + this.data.classes[this.data.subActiveKey].class_name;
+    const class_id = this.data.classes[this.data.subActiveKey].class_id;
     wx.navigateTo({
       url: `/pages/goods/result/index?searchValue=${value}&classId=${class_id}&entry=className`,
-    }); 
+    });
   }
 });
